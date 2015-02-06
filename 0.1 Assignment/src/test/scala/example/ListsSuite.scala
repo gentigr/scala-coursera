@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import junit.framework.Assert.fail
 
 /**
  * This class implements a ScalaTest test suite for the methods in object
@@ -47,7 +48,9 @@ class ListsSuite extends FunSuite {
    * This allows tests to be written in a more readable manner:
    */
   test("one plus one is three?") {
-    assert(1 + 1 == 3) // This assertion fails! Go ahead and fix it.
+    expectResult(false){
+      1 + 1 == 3 // This assertion fails! Go ahead and fix it.
+    }
   }
 
 
@@ -72,7 +75,7 @@ class ListsSuite extends FunSuite {
    * We recommend to always use the `===` equality operator when writing tests.
    */
   test("details why one plus one is not three") {
-    assert(1 + 1 === 3) // Fix me, please!
+    assert(1 + 1 === 2) // Fix me, please!
   }
 
 
@@ -120,5 +123,19 @@ class ListsSuite extends FunSuite {
   
   test("max of a few numbers") {
     assert(max(List(3, 7, 2)) === 7)
+  }
+
+  test("sum of empty list") {
+    assert(sum(List()) === 0)
+  }
+
+  test("empty list for max") {
+    try {
+      max(List())
+      fail()
+    }
+    catch {
+      case _: NoSuchElementException => // Expected, so continue
+    }
   }
 }
